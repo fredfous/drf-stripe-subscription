@@ -38,7 +38,8 @@ def _handle_event_type_validation_error(err: ValidationError):
 
     for error in err.errors():
         error_loc = error['loc']
-        if error_loc[0] == 'event' and error_loc[1] == 'type':
+        error_msg = error['msg']
+        if error_loc[0] == 'event' and error_msg != None and "No match for discriminator 'type' and value" in error_msg:
             event_type_error = True
             break
 
@@ -85,4 +86,3 @@ def handle_webhook_event(event):
 
     elif event_type is EventType.PRICE_DELETED:
         _handle_price_event_data(e.event.data)
-   
