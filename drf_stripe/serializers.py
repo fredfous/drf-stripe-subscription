@@ -36,7 +36,7 @@ class SubscriptionItemSerializer(serializers.ModelSerializer):
     cancel_at_period_end = serializers.BooleanField(source='subscription.cancel_at_period_end')
 
     def get_feature_ids(self, obj):
-        return [{"feature_id": link.feature.feature_id, "feature_desc_en": link.feature.description_en,  "feature_desc_fr": link.feature.description_fr, "active": link.active} for link in
+        return [{"feature_id": link.feature.feature_id, "feature_desc_en": link.feature.description_en,  "feature_desc_fr": link.feature.description_fr} for link in
                 obj.price.product.linked_features.all().prefetch_related('feature')]
 
     def get_subscription_expires_at(self, obj):
@@ -66,7 +66,7 @@ class PriceSerializer(serializers.ModelSerializer):
     services = serializers.SerializerMethodField(method_name='get_feature_ids')
 
     def get_feature_ids(self, obj):
-        return [{"feature_id": prod_feature.feature.feature_id, "feature_desc_en": prod_feature.feature.description_en, "feature_desc_fr": prod_feature.feature.description_fr} for
+        return [{"feature_id": prod_feature.feature.feature_id, "feature_desc_en": prod_feature.feature.description_en, "feature_desc_fr": prod_feature.feature.description_fr, "active": prod_feature.active} for
                 prod_feature in
                 obj.product.linked_features.all().prefetch_related("feature")]
 
