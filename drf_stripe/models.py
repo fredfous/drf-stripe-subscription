@@ -47,7 +47,8 @@ class Feature(models.Model):
      a space delimited strings in Stripe.product.metadata.features
     """
     feature_id = models.CharField(max_length=64, primary_key=True)
-    description = models.CharField(max_length=256, null=True, blank=True)
+    description_en = models.CharField(max_length=256, null=True, blank=True)
+    description_fr = models.CharField(max_length=256, null=True, blank=True)
 
 
 class Product(models.Model):
@@ -62,7 +63,7 @@ class ProductFeature(models.Model):
     """A model representing association of Product and Feature instances. They have many-to-many relationship."""
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="linked_features")
     feature = models.ForeignKey(Feature, on_delete=models.CASCADE, related_name="linked_products")
-
+    active = models.BooleanField()
 
 class Price(models.Model):
     """A model representing to a Stripe Price object, with enhanced attributes."""
