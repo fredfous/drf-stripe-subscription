@@ -66,7 +66,7 @@ class PriceSerializer(serializers.ModelSerializer):
     services = serializers.SerializerMethodField(method_name='get_feature_ids')
 
     def get_feature_ids(self, obj):
-        return [{"feature_id": prod_feature.feature.feature_id, "feature_desc": prod_feature.feature.description} for
+        return [{"feature_id": prod_feature.feature.feature_id, "feature_desc_en": prod_feature.feature.description_en, "feature_desc_fr": prod_feature.feature.description_fr} for
                 prod_feature in
                 obj.product.linked_features.all().prefetch_related("feature")]
 
