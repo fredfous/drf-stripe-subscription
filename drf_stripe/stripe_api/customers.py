@@ -160,7 +160,7 @@ def stripe_api_update_customers(limit=100, starting_after=None, test_data=None):
             query_filters = {drf_stripe_settings.DJANGO_USER_EMAIL_FIELD: customer.email}
             defaults = {k: getattr(customer, v) for k, v in
                         drf_stripe_settings.USER_CREATE_DEFAULTS_ATTRIBUTE_MAP.items()}
-            user, user_created = get_user_model().objects.get_or_create(
+            user, user_created = get_user_model().objects.update_or_create(
                 **query_filters,
                 defaults=defaults
             )
